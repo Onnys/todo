@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo/models/task_data.dart';
 
 class TaskTile extends StatelessWidget {
   final String title;
