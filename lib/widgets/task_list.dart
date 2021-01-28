@@ -17,7 +17,7 @@ class TaskList extends StatelessWidget {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     return Dismissible(
-                      key: Key('$snapshot.data[index].id'),
+                      key: Key("$snapshot"),
                       background: Container(
                           color: Colors.lightBlueAccent,
                           child: Padding(
@@ -34,6 +34,7 @@ class TaskList extends StatelessWidget {
                           )),
                       onDismissed: (direction) {
                         taskData.deleteTask(snapshot.data[index]);
+                        snapshot.data.removeAt(index);
                       },
                       child: TaskTile(
                         title: snapshot.data[index].title,
