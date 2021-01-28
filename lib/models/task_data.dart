@@ -6,41 +6,42 @@ import 'package:todo/main.dart';
 import 'package:todo/models/task.dart';
 
 class TaskData extends ChangeNotifier {
-  List<Task> _tasks = [
-    Task(title: 'helo from beira'),
-    Task(title: 'helo from cumbana'),
-    Task(title: 'helo fro west cost'),
-    Task(title: 'helo from other side'),
-  ];
+  
+  int lengthoftask = 0;
   Future <List<Task>> get tasks async{
     
     final Database db = await database;
     final List<Map<String, dynamic>> tasklist = await db.query('tasks');
+    lengthoftask = tasklist.length;
+    
     return  List.generate(tasklist.length, (index){
+     
       return Task(
         id: tasklist[index]['id'],
         title: tasklist[index]['title'],
-        checked: tasklist[index]['isDone']
+        checked: tasklist[index]['isDone'] == 0 ? false :true,
       );
     }
     
     );
   }
-  int get taskCount{
-    return _tasks.length;
-  }
+  
   Future<void> addTask(Task task) async {
      final Database db = await database;
     db.insert('tasks', task.toMap());
-    _tasks.add(task);
+    
     notifyListeners();
   }
-  void updateTask(bool isDone, int index){
-    _tasks[index].checked = isDone;
+  Future<void> updateTask(Task task) async{
+    final Database db = await database;
+    db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id] );
     notifyListeners();
   }
-  void deleteTask(Task task){
-    _tasks.remove(task);
+  Future<void> deleteTask(Task task)async{
+    
+     final Database db = await database;
+     db.delete('tasks', where: "id = ?", whereArgs: [task.id]);
+    lengthoftask --;
     notifyListeners();
   }
 }

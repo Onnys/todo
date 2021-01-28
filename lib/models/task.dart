@@ -12,7 +12,7 @@ class Task {
     return ({
       'id': id,
       'title': title,
-      'isDone': checked,
+      'isDone': checked == false ? 0 : 1,
     });
   }
 }

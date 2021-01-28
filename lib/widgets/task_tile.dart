@@ -7,9 +7,10 @@ class TaskTile extends StatelessWidget {
   
 
   TaskTile({this.title, this.isChecked, this.toogled, this.deleteTask});
-
+  
   @override
   Widget build(BuildContext context) {
+    print('$isChecked esta neste estado');
     return ListTile(
       onLongPress:deleteTask,
       title: Text(

@@ -39,8 +39,13 @@ class _TasksManagerState extends State<TasksManager> {
                           color: Colors.white,
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
-                  Text('${Provider.of<TaskData>(context).taskCount} Tasks',
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                  Consumer<TaskData>(
+                    builder: (context, task, child){
+                      return Text('${task.lengthoftask} Tasks',
+                        style: TextStyle(color: Colors.white, fontSize: 18));
+                    },
+                                      
+                  ),
                   SizedBox(height: 20),
                 ],
               ),

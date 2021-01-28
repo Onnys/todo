@@ -6,13 +6,14 @@ import 'package:path/path.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sqflite/sqflite.dart';
  Future<Database> database;
+ String taskstable = 'create table tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, isDone INTEGER DEFUALT 0)';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
    database =
       openDatabase(join(await getDatabasesPath(), 'tasks.db'), version: 1,
+      
           onCreate: (db, version) {
-    return db.execute(
-        'create table tasks(id INTEGER PRIMARY KEY, title TEXT, isDone BOOLEAN)');
+    return db.execute(taskstable);
   });
   runApp(Tasks());
 }

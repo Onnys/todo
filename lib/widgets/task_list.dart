@@ -12,20 +12,42 @@ class TaskList extends StatelessWidget {
         return FutureBuilder<List<Task>>(
           future: taskData.tasks,
           builder: (context, snapshot) {
-            return ListView.builder(
-                itemCount: taskData.taskCount,
-                itemBuilder: (context, index) {
-                  return TaskTile(
-                    title: snapshot.data[index].title,
-                    isChecked:snapshot.data[index].checked,
-                    toogled: (value) {
-                      taskData.updateTask(value, index);
-                    },
-                    deleteTask: () {
-                      taskData.deleteTask(snapshot.data[index]);
-                    },
-                  );
-                });
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return Dismissible(
+                      key: Key('$snapshot.data[index].id'),
+                      background: Container(
+                          color: Colors.lightBlueAccent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.lightBlueAccent,
+                                  )),
+                              alignment: Alignment.centerRight,
+                            ),
+                          )),
+                      onDismissed: (direction) {
+                        taskData.deleteTask(snapshot.data[index]);
+                      },
+                      child: TaskTile(
+                        title: snapshot.data[index].title,
+                        isChecked: snapshot.data[index].checked,
+                        toogled: (value) {
+                          snapshot.data[index].checked = value;
+                          taskData.updateTask(snapshot.data[index]);
+                        },
+                        deleteTask: () {},
+                      ),
+                    );
+                  });
+            }
+            return Center(child: CircularProgressIndicator());
           },
         );
       },
