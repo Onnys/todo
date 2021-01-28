@@ -47,7 +47,7 @@ class TaskList extends StatelessWidget {
                     );
                   });
             }
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Text('Has no tasks'));
           },
         );
       },
