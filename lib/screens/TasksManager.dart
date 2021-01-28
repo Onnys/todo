@@ -10,6 +10,8 @@ class TasksManager extends StatefulWidget {
 }
 
 class _TasksManagerState extends State<TasksManager> {
+ 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +41,8 @@ class _TasksManagerState extends State<TasksManager> {
                           color: Colors.white,
                           fontSize: 50,
                           fontWeight: FontWeight.w700)),
-                  Consumer<TaskData>(
-                    builder: (context, task, child){
-                      return Text('${task.lengthoftask} Tasks',
-                        style: TextStyle(color: Colors.white, fontSize: 18));
-                    },
-                                      
-                  ),
+                  Text('${Provider.of<TaskData>(context).lengthoftask} Tasks',
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
                   SizedBox(height: 20),
                 ],
               ),
